@@ -1,19 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mnikolov <mnikolov@student.42lausanne.ch>  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/01 11:13:45 by mnikolov          #+#    #+#             */
-/*   Updated: 2021/12/09 14:06:07 by mnikolov         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "get_next_line.h"
+#include "../includes/so_long.h"
 
 char	*ft_strchr(const char *s, int c)
-
 {
 	while (*s && *s != (char)c)
 		s++;
@@ -23,7 +10,6 @@ char	*ft_strchr(const char *s, int c)
 }
 
 char	*ft_return_line(char **buff)
-
 {
 	char	*line;
 	char	*temp;
@@ -48,13 +34,12 @@ char	*ft_return_line(char **buff)
 }
 
 void	ft_read_file(int fd, char **save)
-
 {
 	int		res;
 	char	buff[BUFFER_SIZE + 1];
 	char	*temp;
 
-	if (BUFFER_SIZE < 0 || BUFFER_SIZE > 10000000)
+	if (BUFFER_SIZE < 0 || BUFFER_SIZE > 1024)
 		return ;
 	res = read(fd, buff, BUFFER_SIZE);
 	while (res > 0)
@@ -73,12 +58,11 @@ void	ft_read_file(int fd, char **save)
 }
 
 char	*get_next_line(int fd)
-
 {
 	static char	*buff = NULL;
 	char		*line;
 
-	if (BUFFER_SIZE < 0 || fd < 0 || BUFFER_SIZE > 10000000)
+	if (BUFFER_SIZE < 0 || fd < 0 || BUFFER_SIZE > 1024)
 		return (NULL);
 	if (!buff || !(ft_strchr(buff, '\n')))
 		ft_read_file(fd, &buff);

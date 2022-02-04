@@ -10,7 +10,7 @@
 /*                                                                            */
 /**************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/so_long.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 

@@ -1,51 +1,14 @@
-RUN		= so_long
-NAME 	= so_long.a
-MLX 	= ./mlx
-LIBFT 	= ./libft
-FOLDER 	= srcs/
-LIB 	= -L ./libft -lft -L ./mlx -lmlx
+SRCS	= srcs/main.c srcs/get_next_line.c srcs/get_next_line_utils.c srcs/check_map.c srcs/error_handle.c srcs/map.c srcs/movements.c srcs/draw_map.c srcs/utils.c
+NAME 	= so_long
 
-RM 		= rm -f
-CC 		= cc
-CFLAGS 	= -Wall -Werror -Wextra -I.
-OPTIONS = -Lmlx -lmlx -lz -framework OpenGL -framework AppKit #To link with the required internal macOS API
+all:	${NAME}
 
-FILES 	=	so_long.c \
-			errors_check.c \
-			game.c \
-			images.c \
-			movements.c \
-			map_checker.c \
-			get_next_line.c \
-			get_next_line_utils.c \
-			map.c \
-			start_game.c
-			
-SOURCES = $(addprefix $(FOLDER), $(FILES))
-OBJ		= $(SOURCES:.c=.o)
+${NAME}:
+	gcc -Wall -Wextra -Werror -Lmlx -lmlx -framework OpenGL -framework AppKit ${SRCS} -o so_long
 
-all: $(NAME)
+clean:
+	rm -f so_long
 
-$(NAME): $(OBJ)
-	@$(MAKE) -C $(MLX)
-	@$(MAKE) -C $(LIBFT)
-	@$(CC) $(CFLAGS) $(OPTIONS) -o $(RUN) $(OBJ) $(LIB)
+fclean:	clean
 
-bonus:	all
-
-clean :
-	@$(RM) $(OBJ)
-	@$(RM) $(RUN)
-	@$(MAKE) -C $(MLX) clean
-	@$(MAKE) -C $(LIBFT) clean
-
-fclean: clean
-	@$(RM) $(NAME)
-	@$(MAKE) -C $(LIBFT) fclean
-
-valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt -s ./$(RUN) ./map/mandatory/small.ber
-
-re: fclean all
-
-.PHONY: all re clean fclean valgrind
+re:	fclean all

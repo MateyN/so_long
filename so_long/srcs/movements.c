@@ -1,125 +1,55 @@
-#include "so_long.h"
+#include "../includes/so_long.h"
 
-void	move_right(t_game *game, int *count)
+int	check_exit(char move, t_map *map)
 {
-	int	prow;
-	int	pcol;
-
-	prow = game->player.row;
-	pcol = game->player.column;
-	if (game->map.draw[prow][pcol + 1] == 'E')
-	{
-		if (game->collectible.count == 0)
-			exit_error(5, game);
-		return ;
-	}
-	game->player.position = 1;
-	*count = 1;
-	game->map.draw[prow][pcol] = '0';
-	pcol += 1;
-	if (game->map.draw[prow][pcol] == 'C')
-	{
-		game->map.draw[prow][pcol] = '0';
-		game->collectible.count -= 1;
-	}
-	game->map.draw[prow][pcol] = 'P';
-}
-
-void	move_left(t_game *game, int *count)
-{
-	int	prow;
-	int	pcol;
-
-	prow = game->player.row;
-	pcol = game->player.column;
-	if (game->map.draw[prow][pcol - 1] == 'E')
-	{
-		if (game->collectible.count == 0)
-			exit_error(5, game);
-		return ;
-	}
-	game->player.position = 0;
-	*count = 1;
-	game->map.draw[prow][pcol] = '0';
-	pcol -= 1;
-	if (game->map.draw[prow][pcol] == 'C')
-	{
-		game->map.draw[prow][pcol] = '0';
-		game->collectible.count -= 1;
-	}
-	game->map.draw [prow][pcol] = 'P';
-}
-
-void	move_down(t_game *game, int *count)
-{
-	int	prow;
-	int	pcol;
-
-	prow = game->player.row;
-	pcol = game->player.column;
-	if (game->map.draw[prow + 1][pcol] == 'E')
-	{
-		if (game->collectible.count == 0)
-			exit_error(5, game);
-		return ;
-	}
-	*count = 1;
-	game->map.draw[prow][pcol] = '0';
-	prow += 1;
-	if (game->map.draw[prow][pcol] == 'C')
-	{
-		game->map.draw[prow][pcol] = '0';
-		game->collectible.count -= 1;
-	}
-	game->map.draw [prow][pcol] = 'P';
-}
-
-void	move_up(t_game *game, int *count)
-{
-	int	prow;
-	int	pcol;
-
-	prow = game->player.row;
-	pcol = game->player.column;
-	if (game->map.draw[prow - 1][pcol] == 'E')
-	{
-		if (game->collectible.count == 0)
-			exit_error(5, game);
-		return ;
-	}
-	*count = 1;
-	game->map.draw[prow][pcol] = '0';
-	prow -= 1;
-	if (game->map.draw[prow][pcol] == 'C')
-	{
-		game->map.draw[prow][pcol] = '0';
-		game->collectible.count -= 1;
-	}
-	game->map.draw [prow][pcol] = 'P';
-}
-
-int	ft_move(int key, t_game *game)
-{
-	static int	i = 1;
-	int			count;
-	int			prow;
-	int			pcol;
-
-	count = 0;
-	prow = game->player.row;
-	pcol = game->player.column;
-	if (key == RIGHT && game->map.draw[prow][pcol + 1] != '1')
-		move_right(game, &count);
-	if (key == LEFT && game->map.draw[prow][pcol - 1] != '1')
-		move_left(game, &count);
-	if (key == DOWN && game->map.draw[prow + 1][pcol] != '1')
-		move_down(game, &count);
-	if (key == UP && game->map.draw[prow - 1][pcol] != '1')
-		move_up(game, &count);
-	if (key == ESC)
-		exit_error(6, game);
-	if (count)
-		printf("Moves: [%d]\n", i++);
-	ft_game(game);
+	if (move == 'E' && map->num_collectable)
+		return (0);
 	return (1);
+}
+
+char	return_next_move(int direction, t_map *map)
+{
+	if (direction == 0)
+		return (map->map[map->pos_player_y - 1][map->pos_player_x]);
+	else if (direction == 1)
+		return (map->map[map->pos_player_y][map->pos_player_x - 1]);
+	else if (direction == 2)
+		return (map->map[map->pos_player_y + 1][map->pos_player_x]);
+	else if (direction == 3)
+		return (map->map[map->pos_player_y][map->pos_player_x + 1]);
+	return (-1);
+}
+
+void	move_player(int direction, t_map *map)
+{
+	char	next_move;
+
+	next_move = return_next_move(direction, map);
+	if (next_move == 'C')
+		map->num_collectable--;
+	update_map(direction, next_move, map);
+	if (next_move == 'E' && map->num_collectable == 0)
+		exit_game(map);
+	if (next_move != '1' && next_move != 'E')
+	{
+		map->moves++;
+		ft_putnbr_fd(map->moves, 1);
+		write(1, "\n", 1);
+	}
+	render_map(map);
+}
+
+int	move(int keycode, t_map *map)
+{
+	if (keycode == 13)
+		move_player(0, map);
+	if (keycode == 0)
+		move_player(1, map);
+	if (keycode == 1)
+		move_player(2, map);
+	if (keycode == 2)
+		move_player(3, map);
+	if (keycode == 53)
+		exit_game(map);
+	return (0);
 }
