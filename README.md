@@ -1,4 +1,4 @@
-[![42](https://img.shields.io/badge/BornToCode-2_Circle-00babc?style=flat-square&logo=42)](https://42lausanne.ch/))
+[![42](https://img.shields.io/badge/BornToCode-2_Circle-00babc?style=flat-square&logo=42)](https://42lausanne.ch/)
 
 [![last-commit](https://img.shields.io/github/last-commit/MateyN/so_long?style=flat-square)](https://github.com/MateyN/so_long)
 
