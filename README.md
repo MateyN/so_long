@@ -37,7 +37,7 @@ textures, sprites. And some very basic gameplay elements.
 
 |                      |                                                                                                                                     |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------  |
-| **Program name**.    | `so_long`                                                                                                                           |
+| **Program name**     | `so_long`                                                                                                                           |
 | **Turn in files**    | `Makefile, *.h, *.c, maps`                                                                                                          |
 | **Makefile**         | `NAME`, `all`, `clean`, `fclean`, `re`                                                                                              |
 | **Arguments**        | a map in format `*.ber`                                                                                                             |
