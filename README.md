@@ -36,9 +36,10 @@ This project is a very small 2D game. It is built to make you work with
 textures, sprites. And some very basic gameplay elements.
 
 |                      |                                                                                                                                     |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| **Program name**     | `so_long`                                                                                                                           |
-| **Makefile**         | `all`, `clean`, `fclean`, `re`, `bonus`, `test`, `debug`                                                                            |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------  |
+| **Program name**.    | `so_long`                                                                                                                           |
+| **Turn in files**    | `Makefile, *.h, *.c, maps`                                                                                                          |
+| **Makefile**         | `NAME`, `all`, `clean`, `fclean`, `re`                                                                                              |
 | **Arguments**        | a map in format `*.ber`                                                                                                             |
 | **External functs.** | - `open`, `close`, `read`, `write`, `printf`, `malloc`, `free`, `perror`, `strerror`, `exit` <br> - All functions of the `MinilibX` |
 | **Libft authorized** | Yes                                                                                                                                 |
@@ -49,8 +50,8 @@ textures, sprites. And some very basic gameplay elements.
 ```shell
 ./
 ├── libs		  # libraries: mlx (MinilibX), get_next_line
-├── includes 	# C header files
-├── srcs			# C source files
+├── includes 	          # C header files
+├── srcs                  # C source files
 ├── image		  # game assets
 ├── maps		  # game maps
 ├── Makefile
